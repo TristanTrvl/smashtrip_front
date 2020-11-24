@@ -1,10 +1,12 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
-import PrimaryButton from "./primaryComponents/buttons/PrimaryButton";
+import LoginForm from "../forms/loginForm/LoginFormContainer";
+import RegisterForm from "../forms/registerForm/RegisterFormContainer";
+import PrimaryButton from "../primaryComponents/buttons/PrimaryButton";
+import logo from "../../images/smash_trip_logo.svg"
 
-const NavBar = (props) => {
-  const { isLoggedIn } = props;
+export default ({ isLoggedIn, openModal }) => {
   let userDisplay;
 
   if (isLoggedIn) {
@@ -24,12 +26,12 @@ const NavBar = (props) => {
     userDisplay = (
       <>
         <li>
-          <NavClickableText onClick={() => alert("login")} inverted>
+          <NavClickableText onClick={() => openModal(<LoginForm/>)}>
             Login
           </NavClickableText>
         </li>
         <li>
-          <PrimaryButton onClick={() => alert("inscription")}>
+          <PrimaryButton onClick={() => openModal(<RegisterForm/>)}>
             S'inscrire
           </PrimaryButton>
         </li>
@@ -39,9 +41,9 @@ const NavBar = (props) => {
 
   return (
     <NavBarContainer>
-      <Link exact to="/">
+      <Link exact="true" to="/">
         <LogoImg
-          src={process.env.PUBLIC_URL + "/images/smash_trip_logo.svg"}
+          src={logo}
           alt="Logo Smash Trip"
         />
       </Link>
@@ -64,22 +66,23 @@ const NavBarContainer = styled.nav`
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
   display: flex;
-  height: 6rem;
-  justify-content: space-between;
+  height: 5rem;
   left: 0px;
   padding: 0 3rem;
-  position: absolute;
+  position: sticky;
   top: 0px;
   width: 100%;
 `;
 const LogoImg = styled.img`
-  width: 7rem;
+  width: 6rem;
 `;
 const NavList = styled.ul`
   align-items: center;
   display: flex;
   gap: 1.5rem;
   list-style: none;
+  margin-left: auto;
+  padding: 0;
 `;
 const NavItem = styled(NavLink)`
   color: #1c1c1c;
@@ -95,5 +98,3 @@ const NavClickableText = styled.button`
   padding: 0;
   text-decoration: none;
 `;
-
-export default NavBar;
